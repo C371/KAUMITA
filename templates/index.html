@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KAUMITA - Perlindungan & Bantuan Inklusif</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom Style -->
+    <link rel="stylesheet" href="/static/index.css">
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- 1. SIDEBAR KIRI -->
+        <aside class="sidebar">
+            <div class="sidebar-inner">
+                <div class="sidebar-brand">
+                    <span class="brand-text">KAUMITA</span>
+                </div>
+                
+                <nav class="sidebar-menu">
+                    <div class="menu-label">Menu</div>
+                    <a href="#" class="menu-item active" id="tab-btn-chat" onclick="switchTab('chat')">
+                        <i class="fa-regular fa-comment-dots"></i>
+                        <span>Conversations</span>
+                    </a>
+                    <a href="#" class="menu-item" id="tab-btn-resources" onclick="switchTab('resources')">
+                        <i class="fa-regular fa-map"></i>
+                        <span>Resource Map</span>
+                    </a>
+                    <a href="#" class="menu-item" onclick="showFeatureAlert('My Documents')">
+                        <i class="fa-regular fa-file-lines"></i>
+                        <span>My Documents</span>
+                    </a>
+                    <a href="#" class="menu-item" onclick="showFeatureAlert('Advocacy Group')">
+                        <i class="fa-solid fa-users"></i>
+                        <span>Advocacy Group</span>
+                    </a>
+                    <a href="#" class="menu-item" onclick="showFeatureAlert('Settings')">
+                        <i class="fa-solid fa-gear"></i>
+                        <span>Settings</span>
+                    </a>
+                </nav>
+
+                <div class="sidebar-actions">
+                    <button class="btn-new-request" onclick="startNewRequest()">
+                        <i class="fa-solid fa-plus"></i>
+                        <span>Start New Request</span>
+                    </button>
+                    
+                    <a href="#" class="emergency-help" onclick="triggerEmergencyAlert()">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <span>Emergency Help</span>
+                    </a>
+                </div>
+            </div>
+        </aside>
+
+        <!-- 2. AREA KONTEN UTAMA -->
+        <main class="main-content">
+            <!-- HEADER ATAS -->
+            <header class="main-header">
+                <div class="header-left">
+                    <button class="header-icon-btn" id="sidebar-toggle-btn" onclick="toggleSidebar()" title="Toggle Sidebar">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                </div>
+                <div class="header-right">
+                    <div class="secure-badge">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <span>Secure Connection Active</span>
+                    </div>
+                    <button class="header-icon-btn" onclick="showFeatureAlert('Notifikasi')">
+                        <i class="fa-regular fa-bell"></i>
+                    </button>
+                    <button class="header-icon-btn" onclick="showFeatureAlert('Bantuan')">
+                        <i class="fa-regular fa-circle-question"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- KONTEN TAB: CHAT CONVERSATIONS -->
+            <section class="tab-pane active" id="tab-chat">
+                <div class="welcome-container">
+                    <h1 class="welcome-title">KAUMITA: Pencarian Layanan Advokasi, Bantuan, dan Perlindungan Inklusif</h1>
+                    <p class="welcome-subtitle">Ruang aman digital untuk mendukung perjalanan Anda menuju perlindungan dan pemberdayaan. Kami di sini untuk mendengar.</p>
+                </div>
+
+                <div class="assistant-flow">
+                    <!-- PILIH KATEGORI BANTUAN -->
+                    <div class="section-label">Pilih Kategori Bantuan</div>
+                    <div class="category-cards-grid">
+                        <div class="category-card" data-category="Kebutuhan Pokok" onclick="toggleCategoryCard(this)">
+                            <div class="category-icon-wrapper icon-teal">
+                                <i class="fa-solid fa-basket-shopping"></i>
+                            </div>
+                            <h3 class="category-card-title">Kebutuhan Pokok</h3>
+                        </div>
+                        <div class="category-card" data-category="Bantuan Hukum" onclick="toggleCategoryCard(this)">
+                            <div class="category-icon-wrapper icon-blue">
+                                <i class="fa-solid fa-scale-balanced"></i>
+                            </div>
+                            <h3 class="category-card-title">Bantuan Hukum</h3>
+                        </div>
+                        <div class="category-card" data-category="Konseling Psikologis" onclick="toggleCategoryCard(this)">
+                            <div class="category-icon-wrapper icon-brown">
+                                <i class="fa-solid fa-brain"></i>
+                            </div>
+                            <h3 class="category-card-title">Konseling Psikologis</h3>
+                        </div>
+                    </div>
+
+                    <!-- FORM DATA DIRI -->
+                    <div class="profile-card">
+                        <div class="profile-card-header">
+                            <i class="fa-solid fa-user-astronaut"></i>
+                            <span>Ceritakan tentang diri Anda</span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Identitas Gender</label>
+                            <div class="gender-pill-group">
+                                <button class="gender-pill" onclick="selectGender(this, 'perempuan')">Perempuan</button>
+                                <button class="gender-pill" onclick="selectGender(this, 'laki-laki')">Laki-laki</button>
+                                <button class="gender-pill" onclick="selectGender(this, 'nonbiner')">Nonbiner</button>
+                                <button class="gender-pill active" onclick="selectGender(this, 'rahasiakan')">Rahasiakan</button>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Kondisi Khusus</label>
+                            <div class="conditions-grid">
+                                <label class="condition-checkbox-card">
+                                    <input type="checkbox" id="chk-disabilitas" onchange="updateSpecialNeedsStyle(this)">
+                                    <span class="custom-checkbox"></span>
+                                    <span class="condition-label">Kebutuhan Khusus / Disabilitas</span>
+                                </label>
+                                <label class="condition-checkbox-card">
+                                    <input type="checkbox" id="chk-anak" onchange="updateSpecialNeedsStyle(this)">
+                                    <span class="custom-checkbox"></span>
+                                    <span class="condition-label">Pendampingan Anak</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AREA RIWAYAT CHAT (DITAMPILKAN DINAMIS SETELAH SUBMIT) -->
+                <div class="chat-history-container" id="chat-history" style="display: none;">
+                    <!-- Pesan obrolan akan disuntikkan secara dinamis di sini -->
+                </div>
+
+                <!-- INPUT BAR CHAT DI BAWAH -->
+                <div class="chat-input-wrapper">
+                    <div class="chat-input-container">
+                        <button class="chat-action-btn" onclick="showFeatureAlert('Unggah Berkas')">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                        <input type="text" id="chat-input-text" placeholder="Tanyakan pada KAUMITA..." onkeydown="handleInputKeyDown(event)">
+                        <button class="chat-send-btn" onclick="submitChatRequest()">
+                            <i class="fa-solid fa-paper-plane"></i>
+                        </button>
+                    </div>
+                    <div class="chat-privacy-footer">
+                        Your privacy is protected. Standard encryption active.
+                    </div>
+                </div>
+            </section>
+
+            <!-- KONTEN TAB: RESOURCE MAP (DAFTAR LEMBAGA) -->
+            <section class="tab-pane" id="tab-resources">
+                <div class="resources-header">
+                    <h2 class="resources-title">Peta Jaringan Rujukan Lembaga</h2>
+                    <p class="resources-subtitle">Menampilkan seluruh daftar {28} lembaga bantuan sosial dan perlindungan inklusif terdaftar.</p>
+                </div>
+                <div class="resources-grid" id="resources-grid-container">
+                    <!-- Kartu lembaga akan diisi secara dinamis -->
+                    <div class="loading-spinner">
+                        <i class="fa-solid fa-circle-notch fa-spin"></i> Memuat data rujukan...
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modul interaksi JavaScript -->
+    <script src="/static/index.js"></script>
+</body>
+</html>

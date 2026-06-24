@@ -37,7 +37,6 @@ class Layanan:
     email: str
     sosmed: str
     kota: str
-    lgbt_friendly: bool
     disabilitas_friendly: bool
 
     def __repr__(self) -> str:
@@ -49,6 +48,20 @@ class Layanan:
         U(req) ⊆ A(v)  →  True
         """
         return kebutuhan.issubset(self.tags)
+
+    def memenuhi_hybrid(self, kebutuhan: set) -> bool:
+        """
+        Kombinasi Filter Wajib (Disabilitas) & Filter Opsional (Irisan Tag).
+        """
+        # 1. Filter Wajib Disabilitas
+        if "disabilitas" in kebutuhan and not self.disabilitas_friendly:
+            return False
+
+        # 2. Filter Opsional (Soft Match / Irisan)
+        tags_opsional = kebutuhan - {"disabilitas"}
+        if tags_opsional:
+            return bool(tags_opsional & self.tags)
+        return True
 
 
 # ─────────────────────────────────────────────
@@ -102,7 +115,6 @@ class LayananGraph:
                     email=row["email"].strip(),
                     sosmed=row["sosmed"].strip(),
                     kota=row["kota"].strip(),
-                    lgbt_friendly=row["lgbt_friendly"].strip().lower() == "true",
                     disabilitas_friendly=row["disabilitas_friendly"].strip().lower() == "true",
                 )
                 g.vertices[layanan.id] = layanan
@@ -149,6 +161,7 @@ class KaumitaBFS:
         kebutuhan: set,
         kota: Optional[str] = None,
         node_awal_id: Optional[int] = None,
+        hybrid: bool = True,
     ) -> list[Layanan]:
         """
         Pseudocode BFS KAUMITA
@@ -221,7 +234,12 @@ class KaumitaBFS:
                 or layanan_v.kota.strip().lower() == "nasional"
             )
 
-            if kota_cocok and layanan_v.memenuhi(kebutuhan):
+            if hybrid:
+                kebutuhan_cocok = layanan_v.memenuhi_hybrid(kebutuhan)
+            else:
+                kebutuhan_cocok = layanan_v.memenuhi(kebutuhan)
+
+            if kota_cocok and kebutuhan_cocok:
                 hasil.append(layanan_v)
 
             # Ekspansi ke tetangga
@@ -229,7 +247,21 @@ class KaumitaBFS:
                 if w not in dikunjungi:
                     antrian.append(w)      # enqueue
 
-        return hasil
+        if hybrid and kebutuhan:
+            # Urutkan hasil berdasarkan:
+            # 1. Jumlah kecocokan tag opsional terbanyak (relevansi)
+            # 2. Lokasi terdekat (Kota cocok persis > "Nasional")
+            tags_opsional = kebutuhan - {"disabilitas"}
+            
+            def sort_key(x):
+                tag_score = len(tags_opsional & x.tags) if tags_opsional else 0
+                kota_score = 1 if (kota and x.kota.strip().lower() == kota.strip().lower()) else 0
+                return (tag_score, kota_score)
+                
+            hasil.sort(key=sort_key, reverse=True)
+
+        # Batasi hasil maksimal 3 lembaga
+        return hasil[:3]
 
     def bfs_tree(
         self,
@@ -358,8 +390,6 @@ class KaumitaBFS:
                     baris.append(f"      Kontak    : {' | '.join(kontak_list)}")
 
                 flags = []
-                if lbg.lgbt_friendly:
-                    flags.append("🏳️‍🌈 LGBT+ Friendly")
                 if lbg.disabilitas_friendly:
                     flags.append("♿ Disabilitas Friendly")
                 if flags:
@@ -377,7 +407,7 @@ class KaumitaBFS:
 
 DAFTAR_TAG_VALID = {
     "kekerasan_seksual", "konseling", "pendampingan", "konsultasi_hukum",
-    "hukum", "pengaduan", "perempuan", "anak", "lgbtqia", "disabilitas",
+    "hukum", "pengaduan", "perempuan", "anak", "disabilitas",
     "mahasiswa", "bantuan_umum", "medis", "kesehatan", "trauma", "pemulihan",
     "psikologi", "perlindungan_anak", "perlindungan_perempuan",
     "perlindungan_korban", "perlindungan_saksi", "pemberdayaan_perempuan",
@@ -415,7 +445,7 @@ def tampilkan_tag_tersedia():
 def input_kebutuhan() -> set:
     tampilkan_tag_tersedia()
     print("\n  Masukkan kebutuhan Anda (pisahkan dengan koma).")
-    print("  Contoh: kekerasan_seksual, konseling, lgbtqia")
+    print("  Contoh: kekerasan_seksual, konseling")
     raw = input("  > ").strip()
     kebutuhan = set(k.strip().lower() for k in raw.split(",") if k.strip())
 
@@ -443,10 +473,9 @@ def input_kota() -> Optional[str]:
 def jalankan_demo(bfs: KaumitaBFS):
     """Menjalankan dua contoh pencarian otomatis sebagai demonstrasi."""
     print("\n" + "─" * 60)
-    print("  DEMO 1 – Mahasiswa korban kekerasan seksual, butuh konseling,")
-    print("           layanan LGBT+ friendly")
+    print("  DEMO 1 – Korban kekerasan seksual, butuh konseling & pendampingan")
     print("─" * 60)
-    req1 = {"kekerasan_seksual", "konseling", "lgbtqia"}
+    req1 = {"kekerasan_seksual", "konseling", "pendampingan"}
     hasil1 = bfs.cari(req1)
     print(KaumitaBFS.format_hasil(hasil1, req1))
 
@@ -458,12 +487,133 @@ def jalankan_demo(bfs: KaumitaBFS):
     print(KaumitaBFS.format_hasil(hasil2, req2, kota="Surakarta"))
 
 
+def jalankan_chatbot(bfs: KaumitaBFS):
+    """Menjalankan sesi tanya-jawab interaktif berbasis AI Gemini."""
+    print("\n" + "═" * 60)
+    print("  CHATBOT KAUMITA - AI KONSULTASI & RUJUKAN")
+    print("═" * 60)
+    
+    try:
+        import google.generativeai as genai
+    except ImportError:
+        print("\n  ⚠  Paket 'google-generativeai' belum terinstal.")
+        print("     Silakan jalankan perintah berikut terlebih dahulu di terminal:")
+        print("     pip install google-generativeai")
+        return
+
+    import os
+    try:
+        from dotenv import load_dotenv
+        load_dotenv()
+    except ImportError:
+        pass
+
+    api_key = os.environ.get("GEMINI_API_KEY")
+    if not api_key:
+        print("\n  Kunci API Gemini tidak ditemukan di variabel lingkungan.")
+        print("  Silakan masukkan API Key Gemini Anda secara manual:")
+        api_key = input("  API Key > ").strip()
+        if not api_key:
+            print("  ⚠  API Key tidak boleh kosong. Membatalkan chatbot.")
+            return
+
+    genai.configure(api_key=api_key)
+    
+    try:
+        # Menggunakan model gemini-2.5-flash untuk respon cepat dan andal
+        model = genai.GenerativeModel('gemini-2.5-flash')
+    except Exception as e:
+        print(f"  ✗  Gagal menginisialisasi model Gemini: {e}")
+        return
+
+    print("\n  Halo! Saya adalah KAUMITA AI, konselor bantuan sosial inklusif Anda.")
+    print("  Silakan ceritakan situasi atau masalah yang Anda alami secara bebas.")
+    print("  Saya akan menganalisis cerita Anda dan memberikan rekomendasi rujukan terdekat.")
+    print("  (Ketik 'keluar' untuk kembali ke menu utama)")
+    
+    while True:
+        cerita = input("\n  Cerita Anda > ").strip()
+        if cerita.lower() == 'keluar':
+            break
+        if not cerita:
+            continue
+            
+        print("  [AI] Menganalisis keluhan Anda...")
+        
+        prompt = f"""
+        Kamu adalah konselor AI empati bernama KAUMITA. Pengguna akan menceritakan keluhan, situasi, atau masalah mereka.
+        Tugasmu adalah:
+        1. Memberikan respon empati singkat (maksimal 2 kalimat) untuk menguatkan mereka.
+        2. Menganalisis cerita pengguna untuk mencari kebutuhan yang cocok dengan daftar tag layanan kami.
+        3. Mencari kota/wilayah jika disebutkan oleh pengguna.
+
+        Daftar tag layanan valid: {sorted(list(DAFTAR_TAG_VALID))}
+        Daftar kota/wilayah valid: {sorted(list(KOTA_VALID))}
+
+        Kamu harus merespon HANYA dengan format JSON berikut tanpa blok kode markdown:
+        {{
+          "sapaan": "pesan empati singkat Anda untuk korban",
+          "kebutuhan": ["tag1", "tag2"],
+          "kota": "nama kota" (atau null jika tidak disebutkan)
+        }}
+        """
+        
+        try:
+            response = model.generate_content(
+                f"{prompt}\n\nCerita Pengguna: {cerita}",
+                generation_config={"response_mime_type": "application/json"}
+            )
+            
+            # Parsing response JSON
+            res_data = json.loads(response.text)
+            
+            sapaan = res_data.get("sapaan", "")
+            kebutuhan_raw = res_data.get("kebutuhan", [])
+            kota_raw = res_data.get("kota", None)
+            
+            # Saring agar hanya mencakup tag dan kota yang valid
+            kebutuhan = set(k.strip().lower() for k in kebutuhan_raw) & DAFTAR_TAG_VALID
+            
+            kota = None
+            if kota_raw and str(kota_raw).strip().lower() in KOTA_VALID:
+                kota = str(kota_raw).strip().title()
+                if kota.lower() == "nasional":
+                    kota = None # Biarkan None agar mencari Nasional + Daerah
+            
+            print(f"\n  [AI]: \"{sapaan}\"")
+            
+            if kebutuhan:
+                print(f"  [AI]: Kebutuhan terdeteksi: {', '.join(sorted(kebutuhan))}")
+                if kota:
+                    print(f"  [AI]: Wilayah/Kota terdeteksi: {kota}")
+                else:
+                    print(f"  [AI]: Wilayah: Nasional & Semua Wilayah")
+                
+                # Jalankan pencarian BFS
+                hasil = bfs.cari(kebutuhan, kota=kota)
+                print(KaumitaBFS.format_hasil(hasil, kebutuhan, kota=kota))
+                
+                # Tampilkan visualisasi BFS tree
+                parent, level = bfs.bfs_tree(kebutuhan, kota=kota)
+                bfs.tampilkan_bfs_tree(parent, level, bfs.graf)
+            else:
+                print("\n  [AI]: Saya tidak dapat mendeteksi kategori kebutuhan bantuan sosial spesifik dari cerita Anda.")
+                print("        Cobalah sebutkan bantuan yang dibutuhkan secara lebih spesifik (misal: butuh konseling, hukum, pendampingan).")
+                
+        except Exception as e:
+            print(f"  ✗  Gagal menghubungi API Gemini atau format tidak sesuai: {e}")
+
+
 # ─────────────────────────────────────────────
 # 5. ENTRY POINT
 # ─────────────────────────────────────────────
 
 def main():
     import os
+    import sys
+    # Mengatur encoding output agar mendukung karakter Unicode/Emoji di terminal Windows
+    if hasattr(sys.stdout, 'reconfigure'):
+        sys.stdout.reconfigure(encoding='utf-8')
 
     # Resolusi path CSV relatif terhadap script ini
     base_dir = os.path.dirname(os.path.abspath(__file__))
@@ -486,6 +636,7 @@ def main():
         print("\n  [1] Cari layanan secara manual")
         print("  [2] Jalankan Demo")
         print("  [3] Lihat semua lembaga")
+        print("  [4] Chatbot KAUMITA (Gemini AI)")
         print("  [0] Keluar")
         pilihan = input("\n  Pilihan > ").strip()
 
@@ -511,11 +662,12 @@ def main():
             print("  " + "─" * 56)
             for v in graf.vertices.values():
                 flags = ""
-                if v.lgbt_friendly:
-                    flags += " 🏳️‍🌈"
                 if v.disabilitas_friendly:
                     flags += " ♿"
                 print(f"  [{v.id:>2}] {v.nama:<42} ({v.kota}){flags}")
+
+        elif pilihan == "4":
+            jalankan_chatbot(bfs)
 
         elif pilihan == "0":
             print("\n  Terima kasih telah menggunakan KAUMITA.\n")

@@ -1,29 +1,29 @@
-id;nama;kategori;tags;kontak;wa;email;sosmed;kota;lgbt_friendly;disabilitas_friendly
-1;KemenPPPA SAPA;pengaduan;kekerasan_seksual,perlindungan_anak,perlindungan_perempuan,pengaduan,konsultasi_hukum;129;8111129129;;@kemenpppa;Nasional;FALSE;FALSE
-2;LPSK;pengaduan;perlindungan_korban,perlindungan_saksi,pengaduan;148;85770010048;;@infolpsk;Nasional;FALSE;FALSE
-3;LBH APIK;pengaduan;kekerasan_seksual,konsultasi_hukum,pendampingan,perempuan,pengaduan;81388822669;;asosiasilbhapik@gmail.com;;Jakarta;FALSE;FALSE
-4;Komnas Perempuan;pengaduan;kekerasan_seksual,hak_asasi_manusia,perempuan,pengaduan;129;8111129129;pengaduan@komnasperempuan.go.id;@komnasperempuan;Nasional;FALSE;FALSE
-5;Rifka Annisa Women's Crisis Center;pengaduan;kekerasan_seksual,pendampingan,perempuan,pengaduan,konseling;;85799057765;;@rifkaannisa_wcc;Yogyakarta;FALSE;FALSE
-6;KPAI;pengaduan;perlindungan_anak,pengaduan,anak;;81110027727;info@kpai.go.id;@kpai_official;Nasional;FALSE;FALSE
-7;Lentera Sintas Indonesia;konseling;kekerasan_seksual,pendampingan,konseling,perempuan;;;;@LenteraSintasIndonesia;Nasional;FALSE;FALSE
-8;KePPak Perempuan;pengaduan;kekerasan_seksual,konsultasi_hukum,pendampingan,perempuan,anak,pengaduan;021-6259708;87888543675;setkeppakperempuan@gmail.com;;Nasional;FALSE;FALSE
-9;Himpunan Wanita Disabilitas Indonesia;konseling;disabilitas,kekerasan_seksual,pendampingan,perempuan,pengaduan;021-29614294;87889309301;hwdi.info@gmail.com;;Nasional;FALSE;TRUE
-10;ECPAT Indonesia;konseling;anak,eksploitasi_seksual,pendampingan,pengaduan;021-7943719;;secretariat@ecpatindonesia.org;@ecpat_indonesia;Nasional;FALSE;FALSE
-11;SPEK-HAM Surakarta;konseling;kekerasan_seksual,pendampingan,konseling,perempuan,hukum;;83836662020;spek_ham@indo.net.id;@spekhamsurakarta;Surakarta;FALSE;FALSE
-12;Arus Pelangi;pengaduan;kekerasan_seksual,pendampingan,pengaduan,lgbtqia;;;;@aruspelangi;Nasional;TRUE;FALSE
-13;LRC-KJHAM;pengaduan;kekerasan_seksual,pendampingan,pengaduan,perempuan;;85641180069;;@lrckjham;Semarang;FALSE;FALSE
-14;Dinas Sosial Kota Surakarta;pengaduan;pengaduan,bantuan_umum;0271-734123;8112811919;dinsos@surakarta.go.id;;Surakarta;FALSE;FALSE
-15;PLU Satu Hati;konseling;pendampingan,pemberdayaan,konseling,lgbtqia;0274-3057230;;;; Yogyakarta;TRUE;FALSE
-16;SAPA 129;pengaduan;kekerasan_seksual,perlindungan_perempuan,perlindungan_anak,pengaduan;129;8111129129;;;Nasional;FALSE;FALSE
-17;Bali Medika Klinik Kesehatan Pria;kesehatan;kesehatan,medis,lgbtqia;;81238917654;;@balimedikaclinic;Bali;TRUE;FALSE
-18;Puskesmas Kecamatan Setiabudi;kesehatan;kesehatan,medis;021-8295529;817853714;; @puskesmassetiabudi;Jakarta;FALSE;FALSE
-19;RSCM Jakarta;kesehatan;kesehatan,medis,rumah_sakit;1500135;;;@rscm.official;Jakarta;FALSE;FALSE
-20;Klinik Angsamerah Menteng;kesehatan;kesehatan,medis,konseling;;82119429443;clinic.menteng@angsamerah.com;@angsamerahclinic;Jakarta;FALSE;FALSE
-21;Perkumpulan Samsara;konseling;konseling,pemulihan;;;;@perkumpulan.samsara;Nasional;FALSE;FALSE
-22;YLBHI-LBH Yogyakarta;pengaduan;konsultasi_hukum,pendampingan,pengaduan;(+62)21-3929840;;;@lbhyogyakarta;Yogyakarta;FALSE;FALSE
-23;Klinik Warga Utama;kesehatan;kesehatan,medis,lgbtqia;;85727161991;;;Semarang;TRUE;FALSE
-24;DP3AP2KB Jateng;pengaduan;perlindungan_perempuan,perlindungan_anak,pemberdayaan_perempuan;247602952;;;@dp3ap2kb_jateng;Jawa Tengah;FALSE;FALSE
-25;DP3AP2KB Surakarta;pengaduan;perlindungan_perempuan,perlindungan_anak,pemberdayaan_perempuan;;85161777823;;@dp3ap2kb.solo;Surakarta;FALSE;FALSE
-26;Layanan Psikologi Pulih;kesehatan;konseling,trauma,pemulihan,psikologi;;8118436633;;@yayasanpulih;Nasional;FALSE;FALSE
-27;Kalyanamitra;konseling;pengaduan,pendampingan,perempuan;+62-21-8004712;;;@y_kalyanamitra;Nasional;FALSE;FALSE
-28;UPTD PPA Surakarta;pengaduan;perlindungan_perempuan,perlindungan_anak,pengaduan;;87864499998;;@uptd_ppa_surakarta;Surakarta;FALSE;FALSE
+id;nama;kategori;tags;kontak;wa;email;sosmed;kota;disabilitas_friendly
+1;KemenPPPA SAPA;pengaduan;kekerasan_seksual,perlindungan_anak,perlindungan_perempuan,pengaduan,konsultasi_hukum;129;8111129129;;@kemenpppa;Nasional;FALSE
+2;LPSK;pengaduan;perlindungan_korban,perlindungan_saksi,pengaduan;148;85770010048;;@infolpsk;Nasional;FALSE
+3;LBH APIK;pengaduan;kekerasan_seksual,konsultasi_hukum,pendampingan,perempuan,pengaduan;81388822669;;asosiasilbhapik@gmail.com;;Jakarta;FALSE
+4;Komnas Perempuan;pengaduan;kekerasan_seksual,hak_asasi_manusia,perempuan,pengaduan;129;8111129129;pengaduan@komnasperempuan.go.id;@komnasperempuan;Nasional;FALSE
+5;Rifka Annisa Women's Crisis Center;pengaduan;kekerasan_seksual,pendampingan,perempuan,pengaduan,konseling;;85799057765;;@rifkaannisa_wcc;Yogyakarta;FALSE
+6;KPAI;pengaduan;perlindungan_anak,pengaduan,anak;;81110027727;info@kpai.go.id;@kpai_official;Nasional;FALSE
+7;Lentera Sintas Indonesia;konseling;kekerasan_seksual,pendampingan,konseling,perempuan;;;;@LenteraSintasIndonesia;Nasional;FALSE
+8;KePPak Perempuan;pengaduan;kekerasan_seksual,konsultasi_hukum,pendampingan,perempuan,anak,pengaduan;021-6259708;87888543675;setkeppakperempuan@gmail.com;;Nasional;FALSE
+9;Himpunan Wanita Disabilitas Indonesia;konseling;disabilitas,kekerasan_seksual,pendampingan,perempuan,pengaduan;021-29614294;87889309301;hwdi.info@gmail.com;;Nasional;TRUE
+10;ECPAT Indonesia;konseling;anak,eksploitasi_seksual,pendampingan,pengaduan;021-7943719;;secretariat@ecpatindonesia.org;@ecpat_indonesia;Nasional;FALSE
+11;SPEK-HAM Surakarta;konseling;kekerasan_seksual,pendampingan,konseling,perempuan,hukum;;83836662020;spek_ham@indo.net.id;@spekhamsurakarta;Surakarta;FALSE
+12;Arus Pelangi;pengaduan;kekerasan_seksual,pendampingan,pengaduan;;;;@aruspelangi;Nasional;FALSE
+13;LRC-KJHAM;pengaduan;kekerasan_seksual,pendampingan,pengaduan,perempuan;;85641180069;;@lrckjham;Semarang;FALSE
+14;Dinas Sosial Kota Surakarta;pengaduan;pengaduan,bantuan_umum;0271-734123;8112811919;dinsos@surakarta.go.id;;Surakarta;FALSE
+15;PLU Satu Hati;konseling;pendampingan,pemberdayaan,konseling;0274-3057230;;;; Yogyakarta;FALSE
+16;SAPA 129;pengaduan;kekerasan_seksual,perlindungan_perempuan,perlindungan_anak,pengaduan;129;8111129129;;;Nasional;FALSE
+17;Bali Medika Klinik Kesehatan Pria;kesehatan;kesehatan,medis;;81238917654;;@balimedikaclinic;Bali;FALSE
+18;Puskesmas Kecamatan Setiabudi;kesehatan;kesehatan,medis;021-8295529;817853714;; @puskesmassetiabudi;Jakarta;FALSE
+19;RSCM Jakarta;kesehatan;kesehatan,medis,rumah_sakit;1500135;;;@rscm.official;Jakarta;FALSE
+20;Klinik Angsamerah Menteng;kesehatan;kesehatan,medis,konseling;;82119429443;clinic.menteng@angsamerah.com;@angsamerahclinic;Jakarta;FALSE
+21;Perkumpulan Samsara;konseling;konseling,pemulihan;;;;@perkumpulan.samsara;Nasional;FALSE
+22;YLBHI-LBH Yogyakarta;pengaduan;konsultasi_hukum,pendampingan,pengaduan;(+62)21-3929840;;;@lbhyogyakarta;Yogyakarta;FALSE
+23;Klinik Warga Utama;kesehatan;kesehatan,medis;;85727161991;;;Semarang;FALSE
+24;DP3AP2KB Jateng;pengaduan;perlindungan_perempuan,perlindungan_anak,pemberdayaan_perempuan;247602952;;;@dp3ap2kb_jateng;Jawa Tengah;FALSE
+25;DP3AP2KB Surakarta;pengaduan;perlindungan_perempuan,perlindungan_anak,pemberdayaan_perempuan;;85161777823;;@dp3ap2kb.solo;Surakarta;FALSE
+26;Layanan Psikologi Pulih;kesehatan;konseling,trauma,pemulihan,psikologi;;8118436633;;@yayasanpulih;Nasional;FALSE
+27;Kalyanamitra;konseling;pengaduan,pendampingan,perempuan;+62-21-8004712;;;@y_kalyanamitra;Nasional;FALSE
+28;UPTD PPA Surakarta;pengaduan;perlindungan_perempuan,perlindungan_anak,pengaduan;;87864499998;;@uptd_ppa_surakarta;Surakarta;FALSE
